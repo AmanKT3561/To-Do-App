@@ -7,6 +7,7 @@ const ToDo = () => {
     ])
     const [editIndex, setEditIndex] = useState("")
     const [editTask, setEditTask] = useState("")
+    const [filter, setFilter] = useState("All")
     const addTask = () => {
         setTasks([...tasks, { task: task, completed: false }])
         setTask("")
@@ -40,6 +41,17 @@ const ToDo = () => {
             )
         );
     };
+    const filterTasks = tasks.filter((ele) => {
+        if(filter === 'All') {
+            return ele
+        }
+        else if(filter === 'Active') {
+            return ele.completed === false
+        }
+        else {
+            return ele.completed === true
+        }
+    })
 
     return (
         <div className='h-screen bg-black text-white pt-10'>
@@ -58,8 +70,8 @@ const ToDo = () => {
                         onChange={(e) => { setTask(e.target.value); }}
                         className='px-5 py-3 rounded-lg bg-[#222] outline-none w-full'
                         type='text'
-                        placeholder='Enter your task ....'>      
-                        </input>
+                        placeholder='Enter your task ....'>
+                    </input>
                     <button onClick={addTask} className='px-5 py-3 bg-green-400 rounded-lg text-[#222]'>Add</button>
                 </div>
                 {/*------------------ */}
@@ -68,9 +80,20 @@ const ToDo = () => {
                 {/*Filter Section*/}
                 <div className='flex justify-between items-center'>
                     <div className='flex gap-2'>
-                        <span className='px-3 py-2 rounded-sm bg-green-400 text-[#222]'>All</span>
-                        <span className='px-3 py-2 rounded-sm bg-[#222]'>Active</span>
-                        <span className='px-3 py-2 rounded-sm bg-[#222]'>Completed</span>
+                        <span onClick={() => setFilter('All')}
+                            className={`px-3 py-2 rounded-sm  cursor-pointer ${filter === 'All' ? 'bg-green-400 text-[#222]' : 'bg-[#222]'}`}
+                        >
+                            All
+                        </span>
+                        <span onClick={() => setFilter('Active')}
+                            className={`px-3 py-2 rounded-sm cursor-pointer ${filter === 'Active' ? 'bg-green-400 text-[#222]': 'bg-[#222]'}`}
+                        >Active
+                        </span>
+                        <span onClick={() => setFilter('Completed')}
+                            className={`px-3 py-2 rounded-sm cursor-pointer ${filter === 'Completed' ? 'bg-green-400 text-[#222]': 'bg-[#222]'}`}
+                        >
+                            Completed
+                        </span>
                     </div>
                     <div className='text-xl'>
                         {tasks.length} Tasks
@@ -82,7 +105,7 @@ const ToDo = () => {
                 {/*Container for all the tasks */}
                 <div className='flex flex-col gap-3 h-[250px] overflow-y-scroll webkit-scrollbar '>
                     {
-                        tasks.map((ele, index) => (
+                        filterTasks.map((ele, index) => (
                             <div className='flex justify-between bg-[#222] px-4 py-3 rounded-lg gap-5'>
                                 {
                                     editIndex === index ? (
