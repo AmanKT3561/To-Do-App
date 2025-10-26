@@ -68,6 +68,9 @@ const ToDo = () => {
                     <input
                         value={task}
                         onChange={(e) => { setTask(e.target.value); }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') addTask();
+                        }}
                         className='px-5 py-3 rounded-lg bg-[#222] outline-none w-full'
                         type='text'
                         placeholder='Enter your task ....'>
