@@ -9,6 +9,17 @@ const ToDo = () => {
         setTasks([...tasks, { task: task, completed: false }])
         setTask("")
     }
+    const deleteTask = (index) => {
+        const newTasks = tasks.filter((_, i) => i != index)
+        setTasks(newTasks);
+    }
+    const clearAll = () => {
+        setTasks([])
+    }
+    const clearCompleted = () => {
+        const newTasks = tasks.filter((ele) => ele.completed === false)
+        setTasks(newTasks)
+    }
     return (
         <div className='h-screen bg-black text-white pt-10'>
             <div className='bg-[#111] rounded-2xl p-5 max-w-[600px] m-auto flex flex-col gap-5'>
@@ -56,8 +67,8 @@ const ToDo = () => {
                                     <label for={index} className='text-xl cursor-pointer select-none'>{ele.task}</label>
                                 </div>
                                 <div className='flex gap-1'>
+                                    <span onClick={() => deleteTask(index)} className='h-5 w-5 bg-red-400 cursor-pointer rounded-full ' />
                                     <span className='h-5 w-5 bg-yellow-400 cursor-pointer rounded-full ' />
-                                    <span className='h-5 w-5 bg-red-400 cursor-pointer rounded-full ' />
                                 </div>
                             </div>
                         ))
@@ -68,8 +79,8 @@ const ToDo = () => {
 
                 {/*Footer*/}
                 <div className='flex gap-2'>
-                    <button className='px-3 py-2 rounded-lg bg-red-400 '>Clear Completed</button>
-                    <button className='px-3 py-2 rounded-lg bg-[#222]'>Clear All</button>
+                    <button onClick={clearCompleted} className='px-3 py-2 rounded-lg bg-red-400 cursor-pointer'>Clear Completed</button>
+                    <button onClick={clearAll} className='px-3 py-2 rounded-lg bg-[#222] cursor-pointer'>Clear All</button>
                 </div>
 
                 {/* ---------*/}
