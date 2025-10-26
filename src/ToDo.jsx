@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 const ToDo = () => {
+    const [task, setTask] = useState("");
     const [tasks, setTasks] = useState([
-        { take: 'go to gym', completed: false },
-        { take: 'go to gym', completed: false },
-        { take: 'go to gym', completed: false },
-        { take: 'go to gym', completed: false },
-        { take: 'go to gym', completed: false },
-        { take: 'go to gym', completed: false },
-        { take: 'go to gym', completed: false }])
-
+        { task: 'go to gym', completed: false },
+        { task: 'go to gym', completed: false },
+    ])
+    const addTask = () => {
+        setTasks([...tasks, { task: task, completed: false }])
+        setTask("")
+    }
     return (
         <div className='h-screen bg-black text-white pt-10'>
             <div className='bg-[#111] rounded-2xl p-5 max-w-[600px] m-auto flex flex-col gap-5'>
@@ -21,9 +21,13 @@ const ToDo = () => {
 
                 {/*Input and Butoon*/}
                 <div className="flex gap-2">
-                    <input className='px-5 py-3 rounded-lg bg-[#222] outline-none w-full'
+                    <input
+                        value={task}
+                        onChange={(e) => { setTask(e.target.value); }}
+                        onKeyDown={(e) => { e.key === 'Enter' && addTask() }}
+                        className='px-5 py-3 rounded-lg bg-[#222] outline-none w-full'
                         type='text' placeholder='Enter your task ....'></input>
-                    <button className='px-5 py-3 bg-green-400 rounded-lg text-[#222]'>Add</button>
+                    <button onClick={addTask} className='px-5 py-3 bg-green-400 rounded-lg text-[#222]'>Add</button>
                 </div>
                 {/*------------------ */}
 
@@ -49,7 +53,7 @@ const ToDo = () => {
                             <div className='flex justify-between bg-[#222] px-4 py-3 rounded-lg'>
                                 <div className='flex gap-2'>
                                     <input className='accent-green-400' type='checkbox' id={index} />
-                                    <label for={index} className='text-xl cursor-pointer select-none'>{ele.take}</label>
+                                    <label for={index} className='text-xl cursor-pointer select-none'>{ele.task}</label>
                                 </div>
                                 <div className='flex gap-1'>
                                     <span className='h-5 w-5 bg-yellow-400 cursor-pointer rounded-full ' />
@@ -63,11 +67,11 @@ const ToDo = () => {
                 {/*-----------------------*/}
 
                 {/*Footer*/}
-               <div className='flex gap-2'>
-               <button className='px-3 py-2 rounded-lg bg-red-400 '>Clear Completed</button>
-               <button className = 'px-3 py-2 rounded-lg bg-[#222]'>Clear All</button>
-               </div>
-           
+                <div className='flex gap-2'>
+                    <button className='px-3 py-2 rounded-lg bg-red-400 '>Clear Completed</button>
+                    <button className='px-3 py-2 rounded-lg bg-[#222]'>Clear All</button>
+                </div>
+
                 {/* ---------*/}
 
             </div>
