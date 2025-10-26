@@ -33,6 +33,14 @@ const ToDo = () => {
             setEditIndex(index)
         }
     }
+    const toggleTask = (index) => {
+        setTasks(
+            tasks.map((ele, i) =>
+                i === index ? { ...ele, completed: !ele.completed } : ele
+            )
+        );
+    };
+
     return (
         <div className='h-screen bg-black text-white pt-10'>
             <div className='bg-[#111] rounded-2xl p-5 max-w-[600px] m-auto flex flex-col gap-5'>
@@ -85,8 +93,18 @@ const ToDo = () => {
 
                                     ) :
                                         <div className='flex gap-2'>
-                                            <input className='accent-green-400' type='checkbox' id={index} />
-                                            <label for={index} className='text-xl cursor-pointer select-none'>{ele.task}</label>
+                                            <input
+                                                className='accent-green-400'
+                                                type='checkbox'
+                                                id={index}
+                                                checked={ele.completed}
+                                                onChange={() => toggleTask(index)}
+                                            />
+                                            <label for={index}
+                                                className={`text-xl cursor-pointer select-none ${ele.completed && 'line-through'}`}
+                                            >
+                                                {ele.task}
+                                            </label>
                                         </div>
                                 }
                                 <div className='flex gap-1'>
