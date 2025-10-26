@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 const ToDo = () => {
     const [task, setTask] = useState("");
-    const [tasks, setTasks] = useState([
-        { task: 'go to gym', completed: false },
-        { task: 'go to gym', completed: false },
-    ])
+    const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem('tasks')) || [])
     const [editIndex, setEditIndex] = useState("")
     const [editTask, setEditTask] = useState("")
     const [filter, setFilter] = useState("All")
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks))
+    }, [tasks])
     const addTask = () => {
         setTasks([...tasks, { task: task, completed: false }])
         setTask("")
@@ -42,10 +42,10 @@ const ToDo = () => {
         );
     };
     const filterTasks = tasks.filter((ele) => {
-        if(filter === 'All') {
+        if (filter === 'All') {
             return ele
         }
-        else if(filter === 'Active') {
+        else if (filter === 'Active') {
             return ele.completed === false
         }
         else {
@@ -86,11 +86,11 @@ const ToDo = () => {
                             All
                         </span>
                         <span onClick={() => setFilter('Active')}
-                            className={`px-3 py-2 rounded-sm cursor-pointer ${filter === 'Active' ? 'bg-green-400 text-[#222]': 'bg-[#222]'}`}
+                            className={`px-3 py-2 rounded-sm cursor-pointer ${filter === 'Active' ? 'bg-green-400 text-[#222]' : 'bg-[#222]'}`}
                         >Active
                         </span>
                         <span onClick={() => setFilter('Completed')}
-                            className={`px-3 py-2 rounded-sm cursor-pointer ${filter === 'Completed' ? 'bg-green-400 text-[#222]': 'bg-[#222]'}`}
+                            className={`px-3 py-2 rounded-sm cursor-pointer ${filter === 'Completed' ? 'bg-green-400 text-[#222]' : 'bg-[#222]'}`}
                         >
                             Completed
                         </span>
