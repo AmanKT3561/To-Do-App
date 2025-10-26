@@ -54,10 +54,12 @@ const ToDo = () => {
                 {/*Input and Butoon*/}
                 <div className="flex gap-2">
                     <input
-                        value={editTask}
+                        value={task}
                         onChange={(e) => { setTask(e.target.value); }}
                         className='px-5 py-3 rounded-lg bg-[#222] outline-none w-full'
-                        type='text' placeholder='Enter your task ....'></input>
+                        type='text'
+                        placeholder='Enter your task ....'>      
+                        </input>
                     <button onClick={addTask} className='px-5 py-3 bg-green-400 rounded-lg text-[#222]'>Add</button>
                 </div>
                 {/*------------------ */}
@@ -71,7 +73,7 @@ const ToDo = () => {
                         <span className='px-3 py-2 rounded-sm bg-[#222]'>Completed</span>
                     </div>
                     <div className='text-xl'>
-                        3 Tasks
+                        {tasks.length} Tasks
                     </div>
                 </div>
 
